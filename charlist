@@ -1,5 +1,3 @@
-":_dquote
-$:_dollar
 @:_at
 B:_B
 %:_perc
@@ -7,6 +5,7 @@ B:_B
 &:_and
 W:_W
 M:_M
+$:_dollar
 #:_hash
 *:_prod
 o:_o
@@ -48,6 +47,7 @@ t:_t
 ?:_quest
 -:_minux
 +:_sum
+":_dquote
 ~:_squiggle
 <:_minus
 >:_greater
