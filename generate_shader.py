@@ -4,8 +4,8 @@ from PIL import ImageFont
 
 f = open("charlist", "r");
 
-RESOLUTION = 14
-FONT_SIZE = 10
+RESOLUTION = 40
+FONT_SIZE = 36
 
 def content(c, name = ""):
     image = Image.new("RGBA", (RESOLUTION, RESOLUTION), (1, 1, 1));
@@ -77,7 +77,7 @@ DEFINE_HEADER = DEFINE_HEADER + "\n#define char_everything {}".format(str(i))
 FUNCTION_EXPLICIT = FUNCTION_EXPLICIT + "\nvec4 _everything(vec2 coord){return vec4(1.0);}\n"
 clist = charlist[0: len(charlist) - 2] + ");"
 getchar_function = getchar_function + "cchar == char_everything?_everything(coord) : \nvec4(0.0);"
-SHADER = SHADER + DEFINE_HEADER + "\n" + FUNCTION_EXPLICIT + "\n" + clist + "\n" +  """vec4 getchar(int pos, vec2 coord)\n{\nint cchar = pos < char_list.length() ? char_list[pos] : REPEAT ? int(mod(float(pos), float(char_list.length()))) : 500;\n"""+ getchar_function + "\nreturn o; \n}" + """void mainImage( out vec4 fragColor, in vec2 fragCoord )\n{\nint pos = int(fragCoord.y / resolution)*int(iResolution.x / resolution) + int(fragCoord.x / resolution);\nvec2 coord = fragCoord - vec2(resolutioni * int(fragCoord.x / resolution), resolutioni*int(fragCoord.y / resolution));\ncoord.y = 16.0 - coord.y;\nfragColor = getchar(pos, coord);\n}"""
+SHADER = SHADER + DEFINE_HEADER + "\n" + FUNCTION_EXPLICIT + "\n" + clist + "\n" +  """vec4 getchar(int pos, vec2 coord)\n{\nint cchar = pos < char_list.length() ? char_list[pos] : REPEAT ? int(mod(float(pos), float(char_list.length()))) : 500;\n"""+ getchar_function + "\nreturn o; \n}" + """void mainImage( out vec4 fragColor, in vec2 fragCoord )\n{\nint pos = int(fragCoord.y / resolution)*int(iResolution.x / resolution) + int(fragCoord.x / resolution);\nvec2 coord = fragCoord - vec2(resolutioni * int(fragCoord.x / resolution), resolutioni*int(fragCoord.y / resolution));\ncoord.y = """ + str(RESOLUTION) + """.0 - coord.y;\nfragColor = getchar(pos, coord);\n}"""
 
 sh = open("shader.glsl", "w")
 sh.write(SHADER);
